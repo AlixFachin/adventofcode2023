@@ -55,8 +55,9 @@ fn main() {
             println!(" running the suite {}", series);
             match series {                
                 1 => {
-                    day1::solve_1::solve();
                     println!("Solving question 1 -=-=-=-==-=-=-=-=-=-=-=-=-=-=-=-");
+                    day1::solve_1::solve();
+                    println!("Solving question 2 -=-=-=-==-=-=-=-=-=-=-=-=-=-=-=-");
                     day1::solve_2::solve();
                 }
                 _ => println!("Module not found!"),
