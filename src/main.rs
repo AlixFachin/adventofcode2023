@@ -3,6 +3,7 @@ use std::fs;
 
 pub mod day1;
 pub mod day2;
+pub mod day3;
 
 fn display_usage() {
     println!("usage:");
@@ -67,6 +68,12 @@ fn main() {
                     println!("Solving question 2 -=-=-=-==-=-=-=-=-=-=-=-=-=-=-=-");
                     day2::solve_2::solve();
                 },
+                3 => {
+                    println!("Solving question 1 -=-=-=-==-=-=-=-=-=-=-=-=-=-=-=-");
+                    day3::solve_1::solve();
+                    println!("Solving question 2 -=-=-=-==-=-=-=-=-=-=-=-=-=-=-=-");
+                    day3::solve_2::solve();
+                }
                 _ => println!("Module not found!"),
             }
         }
