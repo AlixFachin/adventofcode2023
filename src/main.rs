@@ -4,6 +4,7 @@ use std::fs;
 pub mod day1;
 pub mod day2;
 pub mod day3;
+pub mod day4;
 
 fn display_usage() {
     println!("usage:");
@@ -73,6 +74,12 @@ fn main() {
                     day3::solve_1::solve();
                     println!("Solving question 2 -=-=-=-==-=-=-=-=-=-=-=-=-=-=-=-");
                     day3::solve_2::solve();
+                },
+                4 => {
+                    // println!("Solving question 1 -=-=-=-==-=-=-=-=-=-=-=-=-=-=-=-");
+                    // day4::solve_1::solve();
+                    println!("Solving question 2 -=-=-=-==-=-=-=-=-=-=-=-=-=-=-=-");
+                    day4::solve_2::solve();
                 }
                 _ => println!("Module not found!"),
             }
