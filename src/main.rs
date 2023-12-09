@@ -5,6 +5,7 @@ pub mod day1;
 pub mod day2;
 pub mod day3;
 pub mod day4;
+pub mod day5;
 
 fn display_usage() {
     println!("usage:");
@@ -76,10 +77,16 @@ fn main() {
                     day3::solve_2::solve();
                 },
                 4 => {
-                    // println!("Solving question 1 -=-=-=-==-=-=-=-=-=-=-=-=-=-=-=-");
-                    // day4::solve_1::solve();
+                    println!("Solving question 1 -=-=-=-==-=-=-=-=-=-=-=-=-=-=-=-");
+                    day4::solve_1::solve();
                     println!("Solving question 2 -=-=-=-==-=-=-=-=-=-=-=-=-=-=-=-");
                     day4::solve_2::solve();
+                },
+                5 => {
+                    // println!("Solving question 1 -=-=-=-==-=-=-=-=-=-=-=-=-=-=-=-");
+                    // day5::solve_1::solve();
+                    println!("Solving question 2 -=-=-=-==-=-=-=-=-=-=-=-=-=-=-=-");
+                    day5::solve_2::solve();
                 }
                 _ => println!("Module not found!"),
             }
