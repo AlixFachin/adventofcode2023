@@ -1,10 +1,8 @@
 use regex::Regex;
 use std::fs;
 
-const FILEPATH: &str = "src/day6/input.txt";
-
-pub fn solve() {
-    let contents = fs::read_to_string(FILEPATH).expect("Should have been able to read the file");
+pub fn solve(problem_input: &str) {
+    let contents = fs::read_to_string(problem_input).expect("Should have been able to read the file");
 
     let line_array: Vec<&str> = contents.split("\n").collect();
 
@@ -37,13 +35,8 @@ pub fn solve() {
         println!("Solutions are ({},{}) rounded to ({}, {})",x1,x2,x1_u, x2_u);
 
         // Checking for equality now        
-        let mut number_records = x2_u - x1_u;
-        if (d as i32 - x1_u) * x1_u == r as i32 {
-            number_records = number_records - 1;
-        }
-        
+        let mut number_records;
 
-        
         number_records = 0;
         for i in 0..=d {
             let length_achieved = (d - i) * i;

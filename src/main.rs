@@ -1,5 +1,6 @@
-use std::env;
 use std::fs;
+use clap::{Parser, Subcommand};
+use colored::Colorize;
 
 pub mod day1;
 pub mod day2;
@@ -12,13 +13,7 @@ pub mod day8;
 pub mod day9;
 pub mod day10;
 
-fn display_usage() {
-    println!("usage:");
-    println!(" 'cargo run -- run x' will run the code corresponding to day x");
-    println!(" 'cargo run -- add x' will add folder and code corresponding to day x");
-}
-
-fn add_folder(n: u16) {
+fn add_folder(n: u8) {
     // Create directory
     let dirpath = format!("src/day{}", n);
     // TEST -> If the folder already exists, then panic (we don't want to overwrite already written code!)
@@ -40,98 +35,99 @@ fn add_folder(n: u16) {
     }
 }
 
-fn main() {
-    let args: Vec<String> = env::args().collect();
+#[derive(Subcommand, Debug)]
+enum SubCommand {
+    /// Adds a folder for a new Advent Calendar day
+    Add,
+    /// Runs the corresponding solving function for the day
+    Run {
+        #[arg(short, long)]
+        /// 1 to run only question 1 problem, 2 to run only question 2, run both if ommitted
+        question: Option<u8>,
 
-    if args.len() < 2 {
-        display_usage();
-        return;
+        #[arg(short, long)]
+        test: bool,
     }
+}
 
-    let feature = &args[1];
-    let series = &args[2];
+#[derive(Parser, Debug)]
+#[command(author="Alix Fachin", version, about="Executable for Advent of Code 2023")]
+struct Arguments {
+    #[command(subcommand)]
+    cmd: SubCommand,
+    
+    /// index of the day trying to be solved
+    day: u8,
 
-    let series: u16 = series
-        .trim()
-        .parse()
-        .expect("Should input the day series as number!");
+}
 
-    match feature.as_str() {
-        "help" => {
-            display_usage();
-        }
-        "run" => {
-            println!(" running the suite {}", series);
-            match series {                
+fn main() {
+
+    let args = Arguments::parse();
+    
+    match args.cmd {
+        
+        SubCommand::Run { question, test } => {
+            println!("{}{}","Running the suite ".red(), args.day);
+            let day_fn_1: fn(&str);
+            let day_fn_2: fn(&str);
+            match args.day {                
                 1 => {
-                    println!("Solving question 1 -=-=-=-==-=-=-=-=-=-=-=-=-=-=-=-");
-                    day1::solve_1::solve();
-                    println!("Solving question 2 -=-=-=-==-=-=-=-=-=-=-=-=-=-=-=-");
-                    day1::solve_2::solve();
+                    day_fn_1 = day1::solve_1::solve;
+                    day_fn_2 = day1::solve_2::solve;
                 },
                 2 => {
-                    println!("Solving question 1 -=-=-=-==-=-=-=-=-=-=-=-=-=-=-=-");
-                    day2::solve_1::solve();
-                    println!("Solving question 2 -=-=-=-==-=-=-=-=-=-=-=-=-=-=-=-");
-                    day2::solve_2::solve();
+                    day_fn_1 = day2::solve_1::solve;
+                    day_fn_2 = day2::solve_2::solve;
                 },
                 3 => {
-                    println!("Solving question 1 -=-=-=-==-=-=-=-=-=-=-=-=-=-=-=-");
-                    day3::solve_1::solve();
-                    println!("Solving question 2 -=-=-=-==-=-=-=-=-=-=-=-=-=-=-=-");
-                    day3::solve_2::solve();
+                    day_fn_1 = day3::solve_1::solve;
+                    day_fn_2 = day3::solve_2::solve;
                 },
                 4 => {
-                    println!("Solving question 1 -=-=-=-==-=-=-=-=-=-=-=-=-=-=-=-");
-                    day4::solve_1::solve();
-                    println!("Solving question 2 -=-=-=-==-=-=-=-=-=-=-=-=-=-=-=-");
-                    day4::solve_2::solve();
+                    day_fn_1 = day4::solve_1::solve;
+                    day_fn_2 = day4::solve_2::solve;
                 },
                 5 => {
-                    // println!("Solving question 1 -=-=-=-==-=-=-=-=-=-=-=-=-=-=-=-");
-                    // day5::solve_1::solve();
-                    println!("Solving question 2 -=-=-=-==-=-=-=-=-=-=-=-=-=-=-=-");
-                    day5::solve_2::solve();
+                    day_fn_1 = day5::solve_1::solve;
+                    day_fn_2 = day5::solve_2::solve;
                 },
                 6 => {
-                    println!("Solving question 1 -=-=-=-==-=-=-=-=-=-=-=-=-=-=-=-");
-                    // day6::solve_1::solve();
-                    println!("Solving question 2 -=-=-=-==-=-=-=-=-=-=-=-=-=-=-=-");
-                    day6::solve_2::solve();
+                    day_fn_1 = day6::solve_1::solve;
+                    day_fn_2 = day6::solve_2::solve;
                 },
                 7 => {
-                    // println!("Solving question 1 -=-=-=-==-=-=-=-=-=-=-=-=-=-=-=-");
-                    // day7::solve_1::solve();
-                    println!("Solving question 2 -=-=-=-==-=-=-=-=-=-=-=-=-=-=-=-");
-                    day7::solve_2::solve();
+                    day_fn_1 = day7::solve_1::solve;
+                    day_fn_2 = day7::solve_2::solve;
                 },
                 8 => {
-                    // println!("Solving question 1 -=-=-=-==-=-=-=-=-=-=-=-=-=-=-=-");
-                    // day8::solve_1::solve();
-                    println!("Solving question 2 -=-=-=-==-=-=-=-=-=-=-=-=-=-=-=-");
-                    day8::solve_2::solve();
+                    day_fn_1 = day8::solve_1::solve;
+                    day_fn_2 = day8::solve_2::solve;
                 },
                 9 => {
-                    // println!("Solving question 1 -=-=-=-==-=-=-=-=-=-=-=-=-=-=-=-");
-                    // day9::solve_1::solve();
-                    println!("Solving question 2 -=-=-=-==-=-=-=-=-=-=-=-=-=-=-=-");
-                    day9::solve_2::solve();
-                },
-                
+                    day_fn_1 = day9::solve_1::solve;
+                    day_fn_2 = day9::solve_2::solve;
+                },                
                 10 => {
-                    // println!("Solving question 1 -=-=-=-==-=-=-=-=-=-=-=-=-=-=-=-");
-                    // day10::solve_1::solve();
-                    println!("Solving question 2 -=-=-=-==-=-=-=-=-=-=-=-=-=-=-=-");
-                    day10::solve_2::solve();
-                }
-                _ => println!("Module not found!"),
+                    day_fn_1 = day10::solve_1::solve;
+                    day_fn_2 = day10::solve_2::solve;
+                },
+                // 11 => {
+                //     day_fn_1 = day11::solve_1::solve;
+                //     day_fn_2 = day11::solve_2::solve;
+                // }
+                _ => panic!("Module not found!"),
+            }
+            let problem_input = format!("src/day{}/input{}.txt",args.day, if test { "_test" } else {""});                
+            if question.is_none() || question.unwrap() == 1 {
+                println!("{},{}","Solving question 1".yellow()," -=-=-=-==-=-=-=-=-=-=-=-=-=-=-=-".green());
+                day_fn_1(&problem_input);
+            }
+            if question.is_none() || question.unwrap() == 2 {
+                println!("{},{}","Solving question 2".blue()," -=-=-=-==-=-=-=-=-=-=-=-=-=-=-=-".green());
+                day_fn_2(&problem_input);
             }
         }
-        "add" => add_folder(series),
-        _ => {
-            println!("usage: ");
-            println!(" 'cargo run -- run x' will run the code corresponding to day x");
-            println!(" 'cargo run -- add x' will add folder and code corresponding to day x");
-        }
+        SubCommand::Add => add_folder(args.day),
     }
 }

@@ -1,6 +1,5 @@
 use std::fs;
 
-const FILEPATH: &str = "src/day3/input.txt";
 const DEBUG : bool = true;
 
 fn is_digit(c: char) -> bool {
@@ -31,8 +30,8 @@ fn get_power(number_grid: &Vec<Vec<i32>>, i0: usize, j0: usize) -> i32 {
     }
 }
 
-pub fn solve() {
-    let contents = fs::read_to_string(FILEPATH).expect("Should have been able to read the file");
+pub fn solve(problem_input: &str) {
+    let contents = fs::read_to_string(problem_input).expect("Should have been able to read the file");
 
     let line_array: Vec<&str> = contents.split("\n").collect();
 

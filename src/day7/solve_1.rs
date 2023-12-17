@@ -1,7 +1,5 @@
 use std::{fs, cmp::Ordering, collections::HashMap};
 
-const FILEPATH: &str = "src/day7/input.txt";
-
 enum Types {
     FiveKind(char),
     FourKind(char),
@@ -47,7 +45,7 @@ impl Hand {
 
     fn new(desc: &str, bid: &str) -> Hand {
 
-        if (desc.len() != 5) {
+        if desc.len() != 5 {
             panic!("Cannot build corresponding card - string length is wrong");
         }
 
@@ -119,8 +117,8 @@ impl Hand {
 }
 
 
-pub fn solve() {
-    let contents = fs::read_to_string(FILEPATH).expect("Should have been able to read the file");
+pub fn solve(problem_input: &str) {
+    let contents = fs::read_to_string(problem_input).expect("Should have been able to read the file");
 
     let line_array: Vec<&str> = contents.split("\n").collect();
 

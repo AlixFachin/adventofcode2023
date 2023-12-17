@@ -1,7 +1,5 @@
 use std::fs;
 
-const FILEPATH: &str = "src/day5/input.txt";
-
 #[derive(Debug)]
 struct GardenMap {
     source: &'static str,
@@ -38,15 +36,6 @@ impl GardenMap {
             file_index = file_index + 1;
         }
         self.sort();
-    }
-
-    fn get_dest(&self, source_index: usize) -> usize {
-        for (source, length, dest) in &self.map {
-            if source_index >= *source && source_index < *source + *length {
-                return dest + source_index - source;
-            }
-        }
-        return source_index;
     }
 
     fn sort(&mut self) {
@@ -164,8 +153,8 @@ fn test_garden_map_intervals() {
 
 }
 
-pub fn solve() {
-    let contents = fs::read_to_string(FILEPATH).expect("Should have been able to read the file");
+pub fn solve(problem_input: &str) {
+    let contents = fs::read_to_string(problem_input).expect("Should have been able to read the file");
 
     let line_array: Vec<&str> = contents.split("\n").collect();
 

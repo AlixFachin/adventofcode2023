@@ -1,7 +1,5 @@
 use std::fs;
 
-const FILEPATH: &str = "src/day5/input.txt";
-
 #[derive(Debug)]
 struct GardenMap {
     source: &'static str,
@@ -69,8 +67,8 @@ fn test_gardenMap() {
 }
 
 
-pub fn solve() {
-    let contents = fs::read_to_string(FILEPATH).expect("Should have been able to read the file");
+pub fn solve(problem_input: &str) {
+    let contents = fs::read_to_string(problem_input).expect("Should have been able to read the file");
 
     let line_array: Vec<&str> = contents.split("\n").collect();
 

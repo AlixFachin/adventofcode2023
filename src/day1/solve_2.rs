@@ -1,6 +1,5 @@
 use std::fs;
 
-const FILEPATH: &str = "src/day1/input.txt";
 const DEBUG: bool = true;
 
 fn get_digit(c: char) -> Option<i32> {
@@ -19,8 +18,8 @@ fn get_digit(c: char) -> Option<i32> {
     }
 }
 
-pub fn solve() {
-    let contents = fs::read_to_string(FILEPATH).expect("Should have been able to read the file");
+pub fn solve(problem_input: &str) {
+    let contents = fs::read_to_string(problem_input).expect("Should have been able to read the file");
 
     let mut number_total = 0;
 

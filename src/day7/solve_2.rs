@@ -1,6 +1,5 @@
 use std::{ fs, cmp::Ordering, collections::HashMap };
 
-const FILEPATH: &str = "src/day7/input.txt";
 #[derive(PartialEq, Eq, Debug)]
 enum Types {
     FiveKind(char),
@@ -235,8 +234,8 @@ fn test_card_compare() {
 }
 
 
-pub fn solve() {
-    let contents = fs::read_to_string(FILEPATH).expect("Should have been able to read the file");
+pub fn solve(problem_input: &str) {
+    let contents = fs::read_to_string(problem_input).expect("Should have been able to read the file");
 
     let line_array: Vec<&str> = contents.split("\n").collect();
 

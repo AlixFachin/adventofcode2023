@@ -1,8 +1,6 @@
 use std::{ fs, collections::HashSet };
 use colored::Colorize;
 
-const FILEPATH: &str = "src/day10/input.txt";
-
 struct Tile {
     code: char,
     coords: (usize, usize),
@@ -170,8 +168,8 @@ fn test_tile_functions() {
     assert_eq!(t.get_connected_coords(), Some(((2, 3), (4, 3))));
 }
 
-pub fn solve() {
-    let contents = fs::read_to_string(FILEPATH).expect("Should have been able to read the file");
+pub fn solve(problem_input: &str) {
+    let contents = fs::read_to_string(problem_input).expect("Should have been able to read the file");
 
     let line_array: Vec<&str> = contents.split("\n").collect();
     let mut tiles_matrix: Vec<Vec<Tile>> = vec![];
